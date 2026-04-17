@@ -702,6 +702,105 @@
             }
         }
 
+        /* ===== Features Section ===== */
+        .features {
+            padding: 100px 24px;
+            background: var(--clr-bg);
+            position: relative;
+        }
+
+        .features__inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .features__header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .features__title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .features__subtitle {
+            font-size: 1.1rem;
+            color: var(--clr-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(108, 92, 231, 0.4);
+        }
+
+        .feature-card__icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--clr-primary-light);
+            border-radius: 14px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card__icon svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .feature-card__title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--clr-text);
+        }
+
+        .feature-card__description {
+            font-size: 0.95rem;
+            color: var(--clr-text-muted);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .features__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .features__grid {
+                grid-template-columns: 1fr;
+            }
+            .features {
+                padding: 60px 16px;
+            }
+        }
+
         /* ===== Keyframes ===== */
         @keyframes fadeInUp {
             from {
@@ -853,6 +952,52 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- ===== Features Section ===== -->
+        <section class="features" id="features">
+            <div class="features__inner">
+                <div class="features__header">
+                    <h2 class="features__title">Everything you need to grow</h2>
+                    <p class="features__subtitle">Powerful tools built specifically for modern retail without the complex learning curve.</p>
+                </div>
+                
+                <div class="features__grid">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                                <path d="M7 12h2v5H7zm4-3h2v8h-2zm4-3h2v11h-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-card__title">Inventory Management</h3>
+                        <p class="feature-card__description">Track your stock levels in real-time across multiple locations. Get automatic low-stock alerts before you run out.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-card__title">Sales Analytics</h3>
+                        <p class="feature-card__description">Dive deep into your store's performance with interactive charts. Understand what sells best and optimize your strategy.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-card__title">Easy Integration</h3>
+                        <p class="feature-card__description">Connect seamlessly with your favorite accounting, marketing, and e-commerce platforms. Keep all your tools in sync.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

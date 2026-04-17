@@ -340,15 +340,13 @@
             }
         }
 
-        /* ===== Hero Section (placeholder below nav) ===== */
+        /* ===== Hero Section — Two-Column Layout ===== */
         .hero {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: calc(var(--nav-height) + 48px) 24px 80px;
-            text-align: center;
+            padding: calc(var(--nav-height) + 60px) 24px 80px;
             position: relative;
             overflow: hidden;
         }
@@ -365,36 +363,52 @@
         }
 
         .hero::before {
-            width: 480px;
-            height: 480px;
+            width: 520px;
+            height: 520px;
             background: var(--clr-primary);
-            top: -120px;
-            right: -60px;
+            top: -140px;
+            right: 10%;
         }
 
         .hero::after {
-            width: 400px;
-            height: 400px;
+            width: 420px;
+            height: 420px;
             background: var(--clr-accent);
-            bottom: -80px;
-            left: -80px;
-            opacity: 0.2;
+            bottom: -100px;
+            left: -60px;
+            opacity: 0.18;
+        }
+
+        .hero__inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: var(--max-width);
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- Left column (text) ---- */
+        .hero__content {
+            flex: 1 1 50%;
+            min-width: 0;
         }
 
         .hero__badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 16px 6px 8px;
+            padding: 6px 16px 6px 10px;
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--clr-primary-light);
             background: rgba(108, 92, 231, 0.12);
             border: 1px solid rgba(108, 92, 231, 0.2);
             border-radius: 50px;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             letter-spacing: 0.3px;
-            animation: fadeInUp 0.6s var(--ease) both;
         }
 
         .hero__badge-dot {
@@ -406,13 +420,11 @@
         }
 
         .hero__title {
-            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.08;
             letter-spacing: -1.5px;
-            max-width: 720px;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.6s 0.1s var(--ease) both;
+            margin-bottom: 22px;
         }
 
         .hero__title-gradient {
@@ -423,13 +435,12 @@
         }
 
         .hero__subtitle {
-            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
             font-weight: 400;
             color: var(--clr-text-muted);
-            max-width: 540px;
-            line-height: 1.7;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s 0.2s var(--ease) both;
+            line-height: 1.75;
+            max-width: 500px;
+            margin-bottom: 36px;
         }
 
         .hero__actions {
@@ -437,15 +448,50 @@
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 0.6s 0.3s var(--ease) both;
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 34px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-dark));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: var(--shadow-btn);
+            transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+            white-space: nowrap;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 8px 32px rgba(108, 92, 231, 0.55);
+        }
+
+        .btn-hero:active {
+            transform: translateY(0) scale(0.97);
+        }
+
+        .btn-hero__arrow {
+            font-size: 1.1rem;
+            transition: transform 0.25s var(--ease);
+        }
+
+        .btn-hero:hover .btn-hero__arrow {
+            transform: translateX(4px);
         }
 
         .btn-secondary {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 28px;
+            padding: 14px 28px;
             font-family: inherit;
             font-size: 0.9rem;
             font-weight: 600;
@@ -463,6 +509,199 @@
             background: rgba(108, 92, 231, 0.08);
         }
 
+        .hero__trust {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+            padding-top: 28px;
+            border-top: 1px solid var(--clr-border);
+            flex-wrap: wrap;
+        }
+
+        .hero__trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--clr-text-muted);
+            white-space: nowrap;
+        }
+
+        .hero__trust-icon {
+            font-size: 1rem;
+        }
+
+        /* ---- Right column (image) ---- */
+        .hero__visual {
+            flex: 1 1 50%;
+            min-width: 0;
+            position: relative;
+        }
+
+        .hero__image-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(108, 92, 231, 0.08), rgba(0, 206, 201, 0.06));
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow:
+                0 24px 80px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+                0 0 60px rgba(108, 92, 231, 0.12);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+        }
+
+        .hero__image-wrapper:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow:
+                0 32px 100px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+                0 0 80px rgba(108, 92, 231, 0.2);
+        }
+
+        /* Glow accent behind image */
+        .hero__image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+            opacity: 0.15;
+            z-index: -1;
+            filter: blur(2px);
+        }
+
+        .hero__image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        /* Floating stats badge */
+        .hero__float-badge {
+            position: absolute;
+            bottom: -18px;
+            left: -20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            animation: floatBadge 3s ease-in-out infinite;
+        }
+
+        .hero__float-badge-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+            border-radius: 10px;
+            font-size: 1.15rem;
+        }
+
+        .hero__float-badge-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero__float-badge-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--clr-text);
+            line-height: 1.2;
+        }
+
+        .hero__float-badge-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--clr-text-muted);
+        }
+
+        /* Entrance animation helpers */
+        .hero__content,
+        .hero__visual {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+        }
+
+        .hero__visual {
+            transition-delay: 0.15s;
+        }
+
+        .hero__content.visible,
+        .hero__visual.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Hero Responsive ===== */
+        @media (max-width: 900px) {
+            .hero__inner {
+                flex-direction: column;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .hero__content {
+                flex: 1 1 100%;
+            }
+
+            .hero__subtitle {
+                max-width: 100%;
+            }
+
+            .hero__actions {
+                justify-content: center;
+            }
+
+            .hero__trust {
+                justify-content: center;
+            }
+
+            .hero__visual {
+                flex: 1 1 100%;
+                max-width: 520px;
+            }
+
+            .hero__float-badge {
+                bottom: -14px;
+                left: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: calc(var(--nav-height) + 36px) 16px 60px;
+            }
+
+            .hero__actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-hero,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero__float-badge {
+                left: 8px;
+                bottom: -12px;
+                padding: 10px 14px;
+            }
+        }
+
         /* ===== Keyframes ===== */
         @keyframes fadeInUp {
             from {
@@ -478,6 +717,11 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         /* ===== Utility: prevent scroll when menu open ===== */
@@ -545,25 +789,70 @@
     <!-- ===== Hero Section ===== -->
     <main>
         <section class="hero" id="hero">
-            <span class="hero__badge">
-                <span class="hero__badge-dot"></span>
-                Now in Beta
-            </span>
-            <h1 class="hero__title">
-                Sell Smarter with<br>
-                <span class="hero__title-gradient">QuickPOS</span>
-            </h1>
-            <p class="hero__subtitle">
-                The lightning-fast, modern point-of-sale system designed for retail businesses of every size.
-                Manage inventory, track sales, and delight customers — all in one place.
-            </p>
-            <div class="hero__actions">
-                <a href="#signup" class="btn-cta" style="padding: 14px 32px; font-size: 0.95rem;">
-                    Get Started Free <span class="btn-cta__arrow">→</span>
-                </a>
-                <a href="#features" class="btn-secondary">
-                    <span>▶</span> See How It Works
-                </a>
+            <div class="hero__inner">
+
+                <!-- Left Column — Text -->
+                <div class="hero__content" id="hero-content">
+                    <span class="hero__badge">
+                        <span class="hero__badge-dot"></span>
+                        Now in Beta
+                    </span>
+
+                    <h1 class="hero__title">
+                        The Last POS System<br>
+                        <span class="hero__title-gradient">You'll Ever Need</span>
+                    </h1>
+
+                    <p class="hero__subtitle">
+                        Streamline checkout, manage inventory in real time, and unlock
+                        powerful sales analytics — all from one beautifully simple dashboard.
+                        Built for speed. Designed for growth.
+                    </p>
+
+                    <div class="hero__actions">
+                        <a href="#signup" class="btn-hero" id="hero-cta">
+                            Get Started for Free <span class="btn-hero__arrow">→</span>
+                        </a>
+                        <a href="#features" class="btn-secondary">
+                            <span>▶</span> See How It Works
+                        </a>
+                    </div>
+
+                    <div class="hero__trust">
+                        <span class="hero__trust-item">
+                            <span class="hero__trust-icon">✓</span> No credit card required
+                        </span>
+                        <span class="hero__trust-item">
+                            <span class="hero__trust-icon">⚡</span> Setup in 2 minutes
+                        </span>
+                        <span class="hero__trust-item">
+                            <span class="hero__trust-icon">🔒</span> Bank-grade security
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right Column — Image -->
+                <div class="hero__visual" id="hero-visual">
+                    <div class="hero__image-wrapper">
+                        <img
+                            src="assets/hero-dashboard.png"
+                            alt="QuickPOS dashboard showing sales analytics, inventory management, and checkout interface"
+                            class="hero__image"
+                            width="600"
+                            height="400"
+                            loading="eager"
+                        >
+                    </div>
+                    <!-- Floating stats badge -->
+                    <div class="hero__float-badge">
+                        <span class="hero__float-badge-icon">📈</span>
+                        <span class="hero__float-badge-text">
+                            <span class="hero__float-badge-value">+34%</span>
+                            <span class="hero__float-badge-label">Revenue Growth</span>
+                        </span>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
@@ -658,6 +947,32 @@
 
             // Initial check in case the page loads already scrolled
             onScroll();
+
+            /**
+             * Scroll-triggered entrance animation for hero columns.
+             * Uses IntersectionObserver to add '.visible' class when elements
+             * enter the viewport, triggering the CSS opacity/transform transition.
+             */
+            var heroContent = document.getElementById('hero-content');
+            var heroVisual  = document.getElementById('hero-visual');
+
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                observer.observe(heroContent);
+                observer.observe(heroVisual);
+            } else {
+                // Fallback: show immediately for older browsers
+                if (heroContent) heroContent.classList.add('visible');
+                if (heroVisual) heroVisual.classList.add('visible');
+            }
         })();
     </script>
 </body>

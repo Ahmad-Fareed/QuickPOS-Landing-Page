@@ -1039,7 +1039,124 @@
             color: var(--clr-primary-light);
         }
 
+        /* ===== Sign Up Modal ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+        }
+
+        .modal__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal__content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            color: #1a1a2e;
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            animation: modalFadeIn 0.35s var(--ease) forwards;
+        }
+
+        .modal__close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            line-height: 1;
+            color: #8892b0;
+            cursor: pointer;
+            transition: color 0.2s var(--ease);
+            padding: 4px;
+        }
+
+        .modal__close:hover {
+            color: #1a1a2e;
+        }
+
+        .modal__title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            color: #111427;
+        }
+
+        .modal__subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal__form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            color: #111;
+            transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+
+        .modal__submit {
+            margin-top: 12px;
+            width: 100%;
+            justify-content: center;
+            padding: 14px 24px;
+            font-size: 1rem;
+        }
+
         /* ===== Keyframes ===== */
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -46%) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1300,6 +1417,34 @@
         </div>
     </footer>
 
+    <!-- ===== Sign Up Modal ===== -->
+    <div class="modal" id="signup-modal">
+        <!-- Dark Overlay -->
+        <div class="modal__overlay" id="modal-overlay"></div>
+        <!-- Modal Content Box -->
+        <div class="modal__content">
+            <button class="modal__close" id="modal-close" aria-label="Close Modal">&times;</button>
+            <h2 class="modal__title">Create Account</h2>
+            <p class="modal__subtitle">Join QuickPOS and start growing your business today.</p>
+            <form class="modal__form" id="signup-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" minlength="8" required>
+                    <small style="font-size: 0.75rem; color: #666; margin-top: 2px;">Must be at least 8 characters.</small>
+                </div>
+                <button type="submit" class="modal__submit btn-cta" id="signup-submit">Register</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         /**
          * QuickPOS Landing Page — Vanilla JS
@@ -1415,6 +1560,73 @@
                 // Fallback: show immediately for older browsers
                 if (heroContent) heroContent.classList.add('visible');
                 if (heroVisual) heroVisual.classList.add('visible');
+            }
+
+            /**
+             * Sign Up Modal Logic
+             */
+            const modal = document.getElementById('signup-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalOverlay = document.getElementById('modal-overlay');
+            
+            // Buttons that should open the modal
+            const signupLinks = document.querySelectorAll('a[href="#signup"]');
+
+            function openModal(e) {
+                if (e) e.preventDefault();
+                modal.style.display = 'block';
+                // Close mobile menu if it's currently open
+                if (mobileMenu && mobileMenu.classList.contains('open')) {
+                    closeMobileMenu();
+                }
+            }
+
+            function closeModalFunc() {
+                modal.style.display = 'none';
+            }
+
+            // Attach event listeners to all signup buttons
+            signupLinks.forEach(function(link) {
+                link.addEventListener('click', openModal);
+            });
+
+            // Close on 'X' button or clicking the dark overlay
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModalFunc);
+            }
+
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', closeModalFunc);
+            }
+
+            // Close on Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal && modal.style.display === 'block') {
+                    closeModalFunc();
+                }
+            });
+
+            // Form Submission Logic
+            const signupForm = document.getElementById('signup-form');
+            const signupSubmitBtn = document.getElementById('signup-submit');
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Change button text and color to indicate success
+                    const originalText = signupSubmitBtn.textContent;
+                    signupSubmitBtn.textContent = 'Registration Successful!';
+                    signupSubmitBtn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+
+                    // Delay to show success message, then clear fields and close modal
+                    setTimeout(function () {
+                        signupForm.reset();
+                        signupSubmitBtn.textContent = originalText;
+                        signupSubmitBtn.style.background = ''; // restore original CSS background
+                        closeModalFunc();
+                    }, 1500);
+                });
             }
         })();
     </script>

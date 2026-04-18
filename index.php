@@ -1,3 +1,16 @@
+<?php
+$contact_success = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+    $name = htmlspecialchars(trim($_POST['name'] ?? ''));
+    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+    
+    // Process form data here
+    if ($name && $email && $message) {
+        $contact_success = 'Thank you for contacting us! We will get back to you shortly.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1145,6 +1158,84 @@
             font-size: 1rem;
         }
 
+        /* ===== Contact Section ===== */
+        .contact {
+            padding: 100px 24px;
+            background: var(--clr-surface);
+            position: relative;
+        }
+
+        .contact__inner {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact__header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact__title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact__subtitle {
+            font-size: 1.1rem;
+            color: var(--clr-text-muted);
+        }
+
+        .contact__success {
+            background: rgba(0, 184, 148, 0.15);
+            color: #00b894;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 184, 148, 0.3);
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .contact__form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--clr-bg);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--clr-border);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact__form .form-group input,
+        .contact__form .form-group textarea {
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            color: #111;
+            transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+            outline: none;
+            background: #fff;
+        }
+
+        .contact__form .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact__form .form-group input:focus,
+        .contact__form .form-group textarea:focus {
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+
+        .contact__form .form-group label {
+            color: var(--clr-text);
+        }
+
         /* ===== Keyframes ===== */
         @keyframes modalFadeIn {
             from {
@@ -1405,6 +1496,38 @@
         </section>
     </main>
 
+    <!-- ===== Contact Us Section ===== -->
+    <section class="contact" id="contact">
+        <div class="contact__inner">
+            <div class="contact__header">
+                <h2 class="contact__title">Get in Touch</h2>
+                <p class="contact__subtitle">Have questions? We'd love to hear from you.</p>
+            </div>
+
+            <?php if (!empty($contact_success)): ?>
+                <div class="contact__success">
+                    <?php echo $contact_success; ?>
+                </div>
+            <?php endif; ?>
+
+            <form class="contact__form" method="POST" action="#contact">
+                <div class="form-group">
+                    <label for="contact-name">Full Name</label>
+                    <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" placeholder="How can we help?" required></textarea>
+                </div>
+                <button type="submit" name="contact_submit" class="btn-cta" style="width: 100%; justify-content: center; padding: 14px; margin-top: 8px; font-size: 1rem;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
     <!-- ===== Footer ===== -->
     <footer class="footer">
         <div class="footer__inner">
@@ -1606,7 +1729,7 @@
                 }
             });
 
-            // Form Submission Logic
+            // Signup Form Submission Logic
             const signupForm = document.getElementById('signup-form');
             const signupSubmitBtn = document.getElementById('signup-submit');
 
@@ -1625,7 +1748,38 @@
                         signupSubmitBtn.textContent = originalText;
                         signupSubmitBtn.style.background = ''; // restore original CSS background
                         closeModalFunc();
-                    }, 1500);
+                    }, 3000); // 3 seconds wait
+                });
+            }
+
+            // Contact Form Submission Logic
+            const contactForm = document.querySelector('.contact__form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault(); // Prevent page reload
+                    
+                    const submitBtn = contactForm.querySelector('button[name="contact_submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+
+                    // Dynamically show the success message box
+                    let successBox = document.querySelector('.contact__success');
+                    if (!successBox) {
+                        successBox = document.createElement('div');
+                        successBox.className = 'contact__success';
+                        contactForm.parentNode.insertBefore(successBox, contactForm);
+                    }
+                    successBox.textContent = 'Thank you for contacting us! We will get back to you shortly.';
+                    successBox.style.display = 'block';
+
+                    // Wait 3 seconds, then reset and clear
+                    setTimeout(function () {
+                        contactForm.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.style.background = '';
+                        successBox.style.display = 'none';
+                    }, 3000);
                 });
             }
         })();

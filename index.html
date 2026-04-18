@@ -996,6 +996,49 @@
             }
         }
 
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--clr-surface);
+            padding: 48px 24px;
+            text-align: center;
+            border-top: 1px solid var(--clr-border);
+        }
+
+        .footer__inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer__copyright {
+            font-size: 0.95rem;
+            color: var(--clr-text-muted);
+            font-weight: 500;
+        }
+
+        .footer__socials {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer__social-link {
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+            text-decoration: none;
+            transition: color 0.25s var(--ease);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .footer__social-link:hover {
+            color: var(--clr-primary-light);
+        }
+
         /* ===== Keyframes ===== */
         @keyframes fadeInUp {
             from {
@@ -1244,6 +1287,18 @@
             </div>
         </section>
     </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <p class="footer__copyright">&copy; 2026 QuickPOS. All rights reserved.</p>
+            <div class="footer__socials">
+                <a href="#" class="footer__social-link">Twitter</a>
+                <a href="#" class="footer__social-link">LinkedIn</a>
+                <a href="#" class="footer__social-link">Facebook</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         /**

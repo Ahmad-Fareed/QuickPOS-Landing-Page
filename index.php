@@ -801,6 +801,201 @@
             }
         }
 
+        /* ===== Pricing Section ===== */
+        .pricing {
+            padding: 100px 24px;
+            background: var(--clr-bg);
+            position: relative;
+        }
+
+        .pricing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--clr-border), transparent);
+        }
+
+        .pricing__inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .pricing__header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing__title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pricing__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: center;
+        }
+
+        .pricing-card {
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .pricing-card.pro {
+            transform: scale(1.05);
+            border-color: var(--clr-primary);
+            box-shadow: 0 16px 40px rgba(108, 92, 231, 0.15);
+            z-index: 1;
+            background: linear-gradient(180deg, var(--clr-surface-hover) 0%, var(--clr-surface) 100%);
+        }
+
+        .pricing-card.pro::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-dark));
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-btn);
+        }
+
+        .pricing-card.pro:hover {
+            transform: scale(1.05) translateY(-8px);
+            box-shadow: 0 20px 48px rgba(108, 92, 231, 0.25);
+            border-color: var(--clr-primary-light);
+        }
+
+        .pricing-card__tier {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--clr-text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card.pro .pricing-card__tier {
+            color: var(--clr-primary-light);
+        }
+
+        .pricing-card__price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--clr-text);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pricing-card__price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--clr-text-muted);
+            margin-left: 8px;
+        }
+
+        .pricing-card__features {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pricing-card__features li {
+            font-size: 0.95rem;
+            color: var(--clr-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pricing-card__features li::before {
+            content: '✓';
+            color: var(--clr-accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .pricing-card__btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 14px 28px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease);
+            width: 100%;
+        }
+
+        .pricing-card__btn--outline {
+            color: var(--clr-text);
+            background: transparent;
+            border: 1px solid var(--clr-border);
+        }
+
+        .pricing-card__btn--outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .pricing-card__btn--primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-dark));
+            border: none;
+            box-shadow: var(--shadow-btn);
+        }
+
+        .pricing-card__btn--primary:hover {
+            box-shadow: 0 6px 28px rgba(108, 92, 231, 0.4);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .pricing__grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .pricing-card.pro {
+                transform: scale(1);
+            }
+            .pricing-card.pro:hover {
+                transform: translateY(-8px);
+            }
+        }
+
         /* ===== Keyframes ===== */
         @keyframes fadeInUp {
             from {
@@ -996,6 +1191,54 @@
                         </div>
                         <h3 class="feature-card__title">Easy Integration</h3>
                         <p class="feature-card__description">Connect seamlessly with your favorite accounting, marketing, and e-commerce platforms. Keep all your tools in sync.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Pricing Section ===== -->
+        <section class="pricing" id="pricing">
+            <div class="pricing__inner">
+                <div class="pricing__header">
+                    <h2 class="pricing__title">Simple, transparent pricing</h2>
+                </div>
+                
+                <div class="pricing__grid">
+                    <!-- Basic Tier -->
+                    <div class="pricing-card">
+                        <div class="pricing-card__tier">Basic</div>
+                        <div class="pricing-card__price">$29<span>/mo</span></div>
+                        <ul class="pricing-card__features">
+                            <li>1 Register</li>
+                            <li>Basic Reporting</li>
+                            <li>Email Support</li>
+                        </ul>
+                        <a href="#signup" class="pricing-card__btn pricing-card__btn--outline">Choose Plan</a>
+                    </div>
+
+                    <!-- Pro Tier (Highlighted) -->
+                    <div class="pricing-card pro">
+                        <div class="pricing-card__tier">Pro</div>
+                        <div class="pricing-card__price">$79<span>/mo</span></div>
+                        <ul class="pricing-card__features">
+                            <li>Up to 5 Registers</li>
+                            <li>Advanced Analytics</li>
+                            <li>Inventory Management</li>
+                            <li>Priority Support</li>
+                        </ul>
+                        <a href="#signup" class="pricing-card__btn pricing-card__btn--primary">Choose Plan</a>
+                    </div>
+
+                    <!-- Enterprise Tier -->
+                    <div class="pricing-card">
+                        <div class="pricing-card__tier">Enterprise</div>
+                        <div class="pricing-card__price">$199<span>/mo</span></div>
+                        <ul class="pricing-card__features">
+                            <li>Unlimited Registers</li>
+                            <li>Custom Integrations</li>
+                            <li>Dedicated Account Manager</li>
+                        </ul>
+                        <a href="#signup" class="pricing-card__btn pricing-card__btn--outline">Choose Plan</a>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 <?php
+global $contact_success;
 $contact_success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     $name = htmlspecialchars(trim($_POST['name'] ?? ''));

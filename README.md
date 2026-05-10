@@ -51,3 +51,4 @@ Because this project utilizes PHP for the contact form, it must be run on a loca
 * Daniyal - Project Manager / QA Reviewer
 
 Developed for SPM Assignment 04 - Spring 2026
+By Ahmad Fareed and Daniyal Haider.

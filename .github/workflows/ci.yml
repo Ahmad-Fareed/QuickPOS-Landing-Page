@@ -1,0 +1,112 @@
+name: QuickPOS CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - 'bugfix/*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # ─── Stage 10: Jira Commit Validation ───
+  commit-validation:
+    name: Jira Commit Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate Jira Ticket in Commit Message
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            MESSAGE="${{ github.event.pull_request.title }}"
+          else
+            MESSAGE=$(git log -1 --pretty=%B)
+          fi
+          
+          echo "Validating message: $MESSAGE"
+          if [[ ! "$MESSAGE" =~ \[SCRUM-[0-9]+\] ]]; then
+            echo "❌ Error: Commit message or PR title must contain a Jira ticket ID like [SCRUM-29]."
+            exit 1
+          fi
+          echo "✅ Commit message validation passed."
+
+  # ─── Stage 5: Syntax Check ───
+  syntax-check:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Run PHP Lint
+        run: php -l index.php
+
+  # ─── Stage 3: Code Quality (runs PARALLEL with automated-testing) ───
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    needs: [commit-validation, syntax-check]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPStan Analysis
+        run: vendor/bin/phpstan analyse index.php --level=0
+
+  # ─── Stage 4: Automated Testing (runs PARALLEL with code-quality) ───
+  automated-testing:
+    name: Automated Testing
+    runs-on: ubuntu-latest
+    needs: [commit-validation, syntax-check]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPUnit Tests
+        run: vendor/bin/phpunit --configuration phpunit.xml --testdox
+
+  # ─── Stage 6: Artifact Upload (only runs if ALL previous jobs pass) ───
+  build-and-upload:
+    name: Build & Artifact Upload
+    runs-on: ubuntu-latest
+    needs: [code-quality, automated-testing]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Zip Build Files
+        run: zip -r quickpos-build.zip index.php assets/ tests/
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuickPOS-Build
+          path: quickpos-build.zip

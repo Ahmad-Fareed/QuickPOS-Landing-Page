@@ -1,5 +1,7 @@
 # 🛒 QuickPOS Landing Page
 
+[![QuickPOS CI/CD Pipeline](https://github.com/Ahmad-Fareed/QuickPOS-Landing-Page/actions/workflows/ci.yml/badge.svg)](https://github.com/Ahmad-Fareed/QuickPOS-Landing-Page/actions/workflows/ci.yml)
+
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -39,15 +41,13 @@ Because this project utilizes PHP for the contact form, it must be run on a loca
 1. Clone the repository:
    ```bash
    git clone [https://github.com/Ahmad-Fareed/QuickPOS-Landing-Page.git](https://github.com/Ahmad-Fareed/QuickPOS-Landing-Page.git)
-Move the project folder into your local server directory (e.g., htdocs for XAMPP or www for WAMP).
+   ```
+2. Move the project folder into your local server directory (e.g., htdocs for XAMPP or www for WAMP).
+3. Start your Apache server.
+4. Navigate to http://localhost/QuickPOS-Landing-Page in your browser.
 
-Start your Apache server.
-
-Navigate to http://localhost/QuickPOS-Landing-Page in your browser.
-
-👥 Project Team
-Ahmad Fareed - Tech Lead / Lead Developer
-
-Daniyal - Project Manager / QA Reviewer
+## 👥 Project Team
+* Ahmad Fareed - Tech Lead / Lead Developer
+* Daniyal - Project Manager / QA Reviewer
 
 Developed for SPM Assignment 04 - Spring 2026

@@ -1,4 +1,5 @@
 <?php
+global $contact_success;
 $contact_success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     $name = htmlspecialchars(trim($_POST['name'] ?? ''));
@@ -6,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     $message = htmlspecialchars(trim($_POST['message'] ?? ''));
     
     // Process form data here
-    if ($name && $email && $message) {
+    if ($name && $email && $message && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $contact_success = 'Thank you for contacting us! We will get back to you shortly.';
     }
 }

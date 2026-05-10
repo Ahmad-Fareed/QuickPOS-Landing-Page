@@ -3,6 +3,7 @@ name: QuickPOS CI/CD Pipeline
 on:
   push:
     branches:
+      - main
       - 'feature/*'
       - 'bugfix/*'
   pull_request:
@@ -117,3 +118,28 @@ jobs:
         with:
           name: QuickPOS-Build
           path: quickpos-build.zip
+
+  # ─── Stage 12: Deployment (Bonus) ───
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [build-and-upload]
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Prepare Static HTML
+        run: |
+          mkdir -p public/assets
+          cp index.php public/index.html
+          if [ -d "assets" ]; then cp -r assets/* public/assets/ || true; fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          commit_message: "[SCRUM-29] Deploy to GitHub Pages"

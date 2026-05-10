@@ -61,15 +61,15 @@ class ContactFormTest extends TestCase
 
     /**
      * @ticket SCRUM-29
-     * Test 3: Missing email should NOT produce a success message
+     * Test 3: Invalid email format should NOT produce a success message
      */
-    public function testMissingEmailValidation()
+    public function testInvalidEmailFormatValidation()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST = [
             'contact_submit' => true,
             'name' => 'Jane Doe',
-            'email' => '',
+            'email' => 'not-a-valid-email',
             'message' => 'This is a message'
         ];
         
@@ -78,7 +78,7 @@ class ContactFormTest extends TestCase
         ob_end_clean();
 
         global $contact_success;
-        $this->assertEmpty($contact_success, 'Success message should be empty if email is missing');
+        $this->assertEmpty($contact_success, 'Success message should be empty if email format is invalid');
     }
 
     /**
@@ -140,5 +140,41 @@ class ContactFormTest extends TestCase
 
         global $contact_success;
         $this->assertEmpty($contact_success, 'GET request should not produce success message');
+    }
+
+    /**
+     * ADVANCED: Data-driven testing with multiple invalid email inputs
+     * @ticket SCRUM-29
+     * @dataProvider invalidEmailProvider
+     */
+    public function testInvalidEmailFormats(string $invalidEmail, string $description)
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_POST = [
+            'contact_submit' => true,
+            'name' => 'Test User',
+            'email' => $invalidEmail,
+            'message' => 'Test message'
+        ];
+
+        ob_start();
+        include __DIR__ . '/../index.php';
+        ob_end_clean();
+
+        global $contact_success;
+        $this->assertEmpty($contact_success, "Should reject invalid email: $description");
+    }
+
+    /**
+     * Data provider for invalid email formats
+     */
+    public static function invalidEmailProvider(): array
+    {
+        return [
+            ['plaintext',        'no @ symbol'],
+            ['missing@dotcom',   'no domain extension'],
+            ['@nodomain.com',    'no local part'],
+            ['spaces in@email.com', 'spaces in email'],
+        ];
     }
 }

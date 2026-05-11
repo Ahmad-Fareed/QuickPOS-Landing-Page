@@ -1345,7 +1345,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
                     </span>
 
                     <h1 class="hero__title">
-                        The Last POS System<br>
+                        The Super POS System<br>
                         <span class="hero__title-gradient">You'll Ever Need</span>
                     </h1>
 
